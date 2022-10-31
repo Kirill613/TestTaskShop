@@ -1,0 +1,58 @@
+﻿@model NLayerApp.DAL.Entities.Product
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+
+<div>
+    <h4>Product</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Color)
+        </dt>
+        <dd class="col-sm-10">
+            @{
+                int b = Model.Color & 255;
+                int g = (Model.Color >> 8) & 255;
+                int r = (Model.Color >> 16) & 255;
+            }
+            <div style="background-color: rgba(@r, @g, @b)">_</div>
+            @Html.DisplayFor(model => model.Color)
+        </dd>
+    </dl>
+
+    <h4>Shop</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Shop.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Shop.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Shop.Address)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Shop.Address)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-controller="Home" asp-action="Index">Home</a>
+</div>

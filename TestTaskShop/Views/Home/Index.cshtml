@@ -1,0 +1,17 @@
+﻿@model TestTaskShop.Models.HomeViewModel
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+
+    @if (User.IsInRole("Administrator"))
+    {
+        @await Html.PartialAsync("~/Views/Product/_ProductsPartial.cshtml", @Model.Products)
+    }
+    @if (User.IsInRole("Courier"))
+    {
+        @await Html.PartialAsync("~/Views/Order/_OrdersPartial.cshtml", @Model.Orders)
+    }
+</div>

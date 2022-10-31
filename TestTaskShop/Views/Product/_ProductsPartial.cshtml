@@ -1,0 +1,64 @@
+﻿@model IEnumerable<NLayerApp.DAL.Entities.Product>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Products</h1>
+<p>
+    <a asp-controller="Product" asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Color)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+
+                @{
+                    int b = item.Color & 255;
+                    int g = (item.Color >> 8) & 255;
+                    int r = (item.Color >> 16) & 255;
+                }
+                <td>
+                    <div style="background-color: rgba(@r, @g, @b)">_</div> 
+                    @Html.DisplayFor(modelItem => item.Color)
+                </td>
+                <td>
+                    <a asp-controller="Product" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-controller="Product" asp-action="Details" asp-route-id="@item.Id">Details</a> |
+
+                    @await Html.PartialAsync("~/Views/Product/_DeletePartial.cshtml", 
+                        new EditProductViewModel
+                        {
+                            Id=item.Id,
+                            Name=item.Name,
+                            Color=item.Color,
+                            IsDeleted=item.IsDeleted,
+                            Price=item.Price,
+                            ShopId=item.ShopId
+                        })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,12 @@
+﻿@model TestTaskShop.Models.EditProductViewModel
+
+<form asp-controller="Product" asp-action="Delete">
+    <div class="form-group">
+        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="Name" />
+        <input type="hidden" asp-for="Price" />
+        <input type="hidden" asp-for="Color" />
+        <input type="hidden" asp-for="IsDeleted" />
+        <input type="hidden" asp-for="ShopId">
+        <input type="submit" value="Delete" class="btn btn-danger" />
+</form>

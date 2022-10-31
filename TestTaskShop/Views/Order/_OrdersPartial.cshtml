@@ -1,0 +1,70 @@
+﻿@model IEnumerable<NLayerApp.DAL.Entities.Order>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Orders</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Number)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsActive)
+            </th>
+            <th>
+
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            if (item.IsActive)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Number)
+                    </td>
+                    <td>
+                        @if (User.IsInRole("Administrator"))
+                        {
+                            @await Html.PartialAsync("~/Views/Order/_EditPartial.cshtml",
+                                new EditOrderViewModel
+                                {
+                                Id=item.Id,
+                                Number = item.Number,
+                                IsActive = item.IsActive,
+                                CustomerId = item.CustomerId
+                                })
+                        }
+                        Активен
+                    </td>
+                    <td>
+                        <a asp-controller="Order" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                    </td>
+                </tr>
+            }
+        }
+        @foreach (var item in Model)
+        {
+            if (!item.IsActive)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Number)
+                    </td>
+                    <td>
+                        Выполнен
+                    </td>
+                    <td>
+                        <a asp-controller="Order" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
